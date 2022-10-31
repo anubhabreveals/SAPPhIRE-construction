@@ -1,0 +1,53 @@
+digraph ER {
+	graph [rankdir=BT]
+	subgraph cluster_1 {
+		node [shape=box]
+		"State change1" -> Action1 [splines=true]
+		Phenomena1 -> "State change1" [splines=true]
+		Effect1 -> Phenomena1 [splines=true]
+		oRgan1 -> Effect1 [splines=true]
+		Part1 -> oRgan1 [splines=true]
+		Input1 -> Effect1 [splines=true]
+		label=Instance1
+	}
+	subgraph cluster_2 {
+		node [shape=box]
+		"State change2" -> Action2 [splines=true]
+		Phenomena2 -> "State change2" [splines=true]
+		Effect2 -> Phenomena2 [splines=true]
+		oRgan2 -> Effect2 [splines=true]
+		Part2 -> oRgan2 [splines=true]
+		Input2 -> Effect2 [splines=true]
+		label=Instance2
+	}
+	subgraph cluster_3 {
+		node [shape=box]
+		"State change3" -> Action3 [splines=true]
+		Phenomena3 -> "State change3" [splines=true]
+		Effect3 -> Phenomena3 [splines=true]
+		oRgan3 -> Effect3 [splines=true]
+		Part3 -> oRgan3 [splines=true]
+		Input3 -> Effect3 [splines=true]
+		label=Instance3
+	}
+	subgraph cluster_4 {
+		node [shape=box]
+		"State change4" -> Action4 [splines=true]
+		Phenomena4 -> "State change4" [splines=true]
+		Effect4 -> Phenomena4 [splines=true]
+		oRgan4 -> Effect4 [splines=true]
+		Part4 -> oRgan4 [splines=true]
+		Input4 -> Effect4 [splines=true]
+		label=Instance4
+	}
+	subgraph cluster_5 {
+		node [shape=box]
+		"State change5" -> Action5 [splines=true]
+		Phenomena5 -> "State change5" [splines=true]
+		Effect5 -> Phenomena5 [splines=true]
+		oRgan5 -> Effect5 [splines=true]
+		Part5 -> oRgan5 [splines=true]
+		Input5 -> Effect5 [splines=true]
+		label=Instance5
+	}
+}
