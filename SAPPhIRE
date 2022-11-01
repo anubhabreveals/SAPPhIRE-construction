@@ -1,0 +1,17 @@
+digraph ER {
+	graph [rankdir=BT]
+	node [shape=box]
+	Input [label=<<FONT COLOR="BLUE"><b><u>I</u></b>nput:</FONT><BR/>Input>]
+	Part [label=<<FONT COLOR="BLUE"><b><u>P</u></b>art:</FONT><BR/>Part>]
+	oRgan [label=<<FONT COLOR="BLUE">o<b><u>R</u></b>gan:</FONT><BR/>oRgan>]
+	Effect [label=<<FONT COLOR="BLUE"><b><u>E</u></b>ffect:</FONT><BR/>Physical effect>]
+	Phenomena [label=<<FONT COLOR="BLUE"><b><u>Ph</u></b>enomena:</FONT><BR/>Phenomena>]
+	"State change" [label=<<FONT COLOR="BLUE"><b><u>S</u></b>tate change:</FONT><BR/>State Change>]
+	Action [label=<<FONT COLOR="BLUE"><b><u>A</u></b>ction:</FONT><BR/>Action>]
+	"State change" -> Action [splines=true]
+	Phenomena -> "State change" [splines=true]
+	Effect -> Phenomena [splines=true]
+	oRgan -> Effect [splines=true]
+	Part -> oRgan [splines=true]
+	Input -> Effect [splines=true]
+}

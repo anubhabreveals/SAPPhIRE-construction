@@ -16,17 +16,17 @@ sg.theme('DarkTeal9')
 EXCEL_FILE = 'Data_Entry.xlsx'
 df = pd.read_excel(EXCEL_FILE)
 
-def export_sapphire():
-    e = graphviz.Digraph('ER', filename='er.gv', engine='dot', format='png')
+def export_sapphire(values):
+    e = graphviz.Digraph('ER', filename='SAPPhIRE', engine='dot', format=str(values['export format']))
                 
     e.attr('node', shape='box')
-    e.node('Input', label='<<FONT COLOR="BLUE"><b><u>I</u></b>nput:</FONT><BR/>'+values['Input']+'>')
-    e.node('Part', label='<<FONT COLOR="BLUE"><b><u>P</u></b>art:</FONT><BR/>'+values['Part']+'>')
-    e.node('oRgan', label='<<FONT COLOR="BLUE">o<b><u>R</u></b>gan:</FONT><BR/>'+values['oRgan']+'>')
-    e.node('Effect', label='<<FONT COLOR="BLUE"><b><u>E</u></b>ffect:</FONT><BR/>'+values['Physical effect']+'>')
-    e.node('Phenomena', label='<<FONT COLOR="BLUE"><b><u>Ph</u></b>enomena:</FONT><BR/>'+values['Phenomena']+'>')
-    e.node('State change', label='<<FONT COLOR="BLUE"><b><u>S</u></b>tate change:</FONT><BR/>'+values['State Change']+'>')
-    e.node('Action', label='<<FONT COLOR="BLUE"><b><u>A</u></b>ction:</FONT><BR/>'+values['Action']+'>')
+    e.node('Input', label='<<FONT COLOR="BLUE"><b><u>I</u></b>nput:</FONT><BR/>'+str(values['S_I'])+'>')
+    e.node('Part', label='<<FONT COLOR="BLUE"><b><u>P</u></b>art:</FONT><BR/>'+str(values['S_P'])+'>')
+    e.node('oRgan', label='<<FONT COLOR="BLUE">o<b><u>R</u></b>gan:</FONT><BR/>'+str(values['S_R'])+'>')
+    e.node('Effect', label='<<FONT COLOR="BLUE"><b><u>E</u></b>ffect:</FONT><BR/>'+str(values['S_E'])+'>')
+    e.node('Phenomena', label='<<FONT COLOR="BLUE"><b><u>Ph</u></b>enomena:</FONT><BR/>'+str(values['S_PH'])+'>')
+    e.node('State change', label='<<FONT COLOR="BLUE"><b><u>S</u></b>tate change:</FONT><BR/>'+str(values['S_SC'])+'>')
+    e.node('Action', label='<<FONT COLOR="BLUE"><b><u>A</u></b>ction:</FONT><BR/>'+str(values['S_A'])+'>')
 
     e.edge('State change', 'Action', splines='true')
     e.edge('Phenomena', 'State change', splines='true')
@@ -79,7 +79,7 @@ def calculate_window(x,y):
         [sg.Text('Input', size=(15,1)), sg.InputText(key='Input')],
         [sg.Submit(), sg.Button('Clear'), sg.Exit()],[sg.Button('Calculate Variety', button_color='green'), sg.Button('Show Database'), sg.Button('Clear Database')]]
 
-    column_2_layout = [[sg.Text('Action', justification='center', size=(40,1), key='S_A')],[sg.Text('↑', justification='center', size=(40,1))],[sg.Text('State Change', justification='center', size=(40,1), key='S_SC')],[sg.Text('↑', justification='center', size=(40,1))],[sg.Text('Phenomena', justification='center', size=(40,1), key='S_PH')],[sg.Text('↑', justification='center', size=(40,1))],[sg.Text('Physical effect', justification='center', size=(40,1), key='S_E')],[sg.Text('↗', justification='right', size=(13,1)),sg.Text('', justification='center', size=(7,1)),sg.Text('↖', justification='center', size=(10,1))],[sg.Text('Input', justification='center', size=(20,1), key='S_I'),sg.Text('oRgan', justification='center', size=(20,1), key='S_R')],[sg.Text('', justification='center', size=(20,1)),sg.Text('↑', justification='center', size=(20,1))],[sg.Text('', justification='center', size=(20,1)),sg.Text('Part', justification='center', size=(20,1), key='S_P')]]
+    column_2_layout = [[sg.InputText('Action', justification='center', size=(50,1), key='S_A')],[sg.Text('↑', justification='center', size=(44,1))],[sg.InputText('State Change', justification='center', size=(50,1), key='S_SC')],[sg.Text('↑', justification='center', size=(44,1))],[sg.InputText('Phenomena', justification='center', size=(50,1), key='S_PH')],[sg.Text('↑', justification='center', size=(44,1))],[sg.InputText('Physical effect', justification='center', size=(50,1), key='S_E')],[sg.Text('↗', justification='right', size=(13,1)),sg.Text('', justification='center', size=(7,1)),sg.Text('↖', justification='center', size=(10,1))],[sg.InputText('Input', justification='center', size=(24,1), key='S_I'),sg.InputText('oRgan', justification='center', size=(24,1), key='S_R')],[sg.Text('', justification='center', size=(22,1)),sg.Text('↑', justification='center', size=(22,1))],[sg.Text('', justification='center', size=(20,1)),sg.InputText('Part', justification='center', size=(25,1), key='S_P')],[sg.Combo(['JPEG','PNG','PDF','SVG'],default_value='PDF', key='export format'),sg.Button('Export Image')]]
 
     calculate_layout = [[sg.Column(column_1_layout), sg.VSeperator(), sg.Column(column_2_layout)],[sg.Table(values = df1, headings = headings, auto_size_columns=True, justification='left', enable_events=True, key = 'datatable')]]
 
@@ -154,7 +154,16 @@ def calculate_window(x,y):
         if event == 'datatable':
             selected_row = int(values['datatable'][0])
             constructs=df1[selected_row]
-            print(constructs[0])
+            calculate_window['S_A'].update(constructs[2])
+            calculate_window['S_SC'].update(constructs[3])
+            calculate_window['S_PH'].update(constructs[4])
+            calculate_window['S_E'].update(constructs[5])
+            calculate_window['S_R'].update(constructs[6])
+            calculate_window['S_P'].update(constructs[7])
+            calculate_window['S_I'].update(constructs[8])
+
+        if event == 'Export Image':
+            export_sapphire(values)
 
         if event == 'Submit':
             if values['Concept ID']=='' or values['Instance ID']=='' or values['Action']=='' or values['State Change']=='' or values['Phenomena']=='' or values['Physical effect']=='' or values['oRgan']=='' or values['Part']=='' or values['Input']=='':
@@ -173,8 +182,6 @@ def calculate_window(x,y):
                 calculate_window['S_R'].update(values['oRgan'])
                 calculate_window['S_P'].update(values['Part'])
                 calculate_window['S_I'].update(values['Input'])
-
-                export_sapphire(values)
 
 
         if event == 'Calculate Variety':
