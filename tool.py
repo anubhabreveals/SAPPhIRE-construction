@@ -83,7 +83,7 @@ def calculate_window(x,y):
 
     calculate_layout = [[sg.Column(column_1_layout), sg.VSeperator(), sg.Column(column_2_layout)],[sg.Table(values = df1, headings = headings, auto_size_columns=True, justification='left', enable_events=True, key = 'datatable')]]
 
-    calculate_window = sg.Window('VariAnT v1.0', calculate_layout, modal=True)
+    calculate_window = sg.Window('VariAnT v1.1', calculate_layout, modal=True)
 
     def clear_input():
         for key in values:
@@ -289,7 +289,7 @@ def calculate_window(x,y):
     calculate_window.close()
 
 layout = [[sg.Image(filename="VariAnT_logo.png")],[sg.Text('Total no. of concepts:', size=(35,1)), sg.Spin([i for i in range(1,100)], size=(5,1), initial_value=1, key='con_num')],[sg.Text('Max no. of SAPPhIRE instances for a concept:', size=(35,1)), sg.Spin([i for i in range(1,100)], size=(5,1), initial_value=1, key='ins_num')],[sg.Button('Start'),sg.Button('Exit')]]
-window = sg.Window('VariAnT v1.0', layout, finalize=True)
+window = sg.Window('VariAnT v1.1', layout, finalize=True)
 
 
 
